@@ -30,9 +30,16 @@ exports.registerUser = async function (req, res) {
         const jwtToken = jwt.sign({id: result._id}, process.env.JWT_SECRET, {expiresIn: "2h"});
 
         const {password, ...userDetails} = result._doc;
+
+        const options = {
+            expires: new Date(
+                Date.now() + process.env.COOKIE_EXPIRE * 60 * 60 * 1000
+            ),
+            httpOnly: true
+        }
         
 
-        return res.status(201).json({
+        return res.status(201).cookie("token", jwtToken, options).json({
             saved: true,
             message: "You have registered successfully!",
             jwtToken,
@@ -69,8 +76,15 @@ exports.login = async function (req, res) {
         const jwtToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "2h"});
 
         const {password, ...userDetails} = user._doc;
+        
+        const options = {
+            expires: new Date(
+                Date.now() + process.env.COOKIE_EXPIRE * 60 * 60 * 1000
+            ),
+            httpOnly: true
+        }
 
-        return res.status(200).json({
+        return res.status(200).cookie("token", jwtToken, options).json({
             saved: true,
             message: "You are logged in successfully!",
             jwtToken,
