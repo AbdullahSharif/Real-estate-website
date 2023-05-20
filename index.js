@@ -4,6 +4,7 @@ const dotenv = require("dotenv")
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes.js");
 const propertyRoutes = require("./routes/propertyRoutes.js");
+const uploadImage = require("./routes/uploadRoutes.js");
 const cookieParser = require("cookie-parser");
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(expres.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use("/auth", authRoutes);
 app.use("/properties", propertyRoutes);
+app.use("/uploadImage", uploadImage );
 
 
 
