@@ -44,6 +44,10 @@ const propertySchema = new mongoose.Schema({
     city: {
         type: String,
         required: [true, "city is required!"]
+    },
+    featured: {
+        type: Boolean,
+        default: false
     }
 
 }, {timestamps: true});
