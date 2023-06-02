@@ -101,7 +101,13 @@ exports.getProperty = async (req, res) => {
 exports.getFeaturedProperties = async (req, res) => {
     try {
 
-        const properties = await Property.find({featured: true}).populate("currentOwner","-password");
+        // const properties = await Property.find({featured}).populate("currentOwner","-password");
+        // let properties = await Property.find().populate("currentOwner", "-password");
+        console.log(1);
+        let properties = await Property.find().populate("currentOwner", "-password");
+
+        // properties = properties.filter(property => property.featured == true);
+
         if(!properties) return res.status(200).json({
             saved: true,
             message: "No featured properties listed at this time!"
@@ -114,6 +120,7 @@ exports.getFeaturedProperties = async (req, res) => {
         })
         
     } catch (error) {
+        console.log(2)
         return res.status(500).json({
             saved: false,
             message: error.message
